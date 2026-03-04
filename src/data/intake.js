@@ -214,3 +214,118 @@ NOW READ MY MATERIALS AND EXTRACT:
 
 [PASTE YOUR MATERIALS HERE]
 `;
+
+// ========================================
+// CLIENT-FACING INTAKE PROMPT
+// ========================================
+
+export const CLIENT_INTAKE_PROMPT = `Hi! I'm about to do a deep analysis of your go-to-market strategy. To give you the most valuable results, I need to understand your business thoroughly.
+
+Please paste this prompt into Claude or ChatGPT along with any of the following documents you have:
+- Your pitch deck or investor memo
+- Your website URL or homepage copy
+- Any marketing materials you've created
+- Sales call notes or recordings
+- Your LinkedIn company page content
+- Budget or spending breakdowns for marketing/sales
+
+Then answer these questions based on your documents AND your own knowledge. Be as specific and honest as possible — the more detail, the better the analysis.
+
+=======================================
+ABOUT YOUR BUSINESS
+=======================================
+
+1. What does your product/service do? (One sentence, then explain in detail)
+2. What stage are you at and what's your current revenue?
+3. Who is your ideal customer? Be specific — company type, size, title of buyer, what situation makes them ready to buy.
+4. What makes you different from alternatives? Why do customers pick you?
+
+=======================================
+YOUR CURRENT GO-TO-MARKET
+=======================================
+
+5. What marketing and sales activities are you currently doing? What's working? What isn't?
+6. How much are you spending on marketing/sales monthly, and on what?
+7. How do you currently measure what's working? (Be honest if the answer is "we don't")
+8. What's the most frustrating thing about your current GTM?
+
+=======================================
+YOUR GOALS
+=======================================
+
+9. What does success look like for you in 90 days? Be specific with numbers if possible.
+10. What's your biggest constraint? (Time, money, expertise, something else?)
+
+=======================================
+YOUR MARKET
+=======================================
+
+11. Who are your top 3 competitors? What do they do well? What do they get wrong?
+12. What's your unique point of view on your market that competitors miss?
+
+=======================================
+ANYTHING ELSE
+=======================================
+
+13. Is there anything specific about your industry, business model, or situation that you think is important for a GTM analysis? Things that are unique to how your business works?
+
+(This last question is critical — it catches the industry-specific context that standard questions miss.)
+
+=======================================
+
+Please be thorough. The quality of my analysis is directly proportional to the detail you provide here. If a question doesn't apply, say so and explain why — that's useful information too.
+`;
+
+// ========================================
+// INDUSTRY ADD-ON QUESTIONS
+// ========================================
+
+export const INDUSTRY_ADDONS = {
+    "depin_ai_infra": {
+        label: "DePIN / AI Infrastructure",
+        questions: [
+            { id: "depin_1", q: "What is your current network size (nodes, users, compute capacity)?", type: "short", why: "Supply-side health determines what demand-side GTM is possible" },
+            { id: "depin_2", q: "What percentage of your users are supply-side (node operators) vs demand-side (paying for compute/inference)?", type: "short", why: "Most DePIN protocols are supply-heavy. The demand ratio reveals the real GTM challenge." },
+            { id: "depin_3", q: "How are you incentivizing early users? (Token rewards, points, airdrops, usage credits)", type: "long", why: "Incentive design affects whether early users convert to paying customers or churn post-airdrop" },
+            { id: "depin_4", q: "What chain are you built on and how does that affect your go-to-market?", type: "long", why: "Chain ecosystem (Solana, ETH, etc.) determines community, partnerships, and developer audience" },
+            { id: "depin_5", q: "How do you convert crypto-native community members into developer/enterprise customers?", type: "long", why: "The supply-to-demand conversion is THE GTM challenge for DePIN protocols" },
+            { id: "depin_6", q: "What is your latency/reliability compared to centralized alternatives (AWS, etc.)?", type: "long", why: "Performance gap vs centralized cloud is the #1 objection from developers" },
+        ],
+        learned_from: "Gradient Network engagement, March 2026",
+    },
+
+    "b2b_saas": {
+        label: "B2B SaaS",
+        questions: [
+            { id: "saas_1", q: "What's your current MRR/ARR and growth rate?", type: "short", why: "Growth rate determines urgency and GTM approach" },
+            { id: "saas_2", q: "What's your average deal size and sales cycle length?", type: "short", why: "Determines whether inbound or outbound is primary motion" },
+            { id: "saas_3", q: "What's your current CAC and do you know your LTV?", type: "short", why: "Unit economics determine which channels are viable" },
+            { id: "saas_4", q: "Where are you seeing the most churn and why?", type: "long", why: "Churn often indicates positioning or ICP problem, not just product" },
+            { id: "saas_5", q: "Are you product-led, sales-led, or hybrid?", type: "select", why: "Fundamentally changes the GTM motion" },
+        ],
+        learned_from: "General B2B SaaS knowledge — refine with actual client data",
+    },
+};
+
+// ========================================
+// DOCUMENT UPLOAD CHECKLIST
+// ========================================
+
+export const DOC_UPLOAD_CHECKLIST = {
+    priority_1_must_have: [
+        { doc: "Website URL", why: "Current positioning, messaging, offer — what the market sees today", format: "URL" },
+        { doc: "Pitch deck or one-pager", why: "How they describe themselves, their market, their traction", format: "PDF/slides" },
+    ],
+    priority_2_high_value: [
+        { doc: "Budget or spend breakdown", why: "Where money is going — reveals what they think is working", format: "Spreadsheet, screenshot, or description" },
+        { doc: "Sales call recording or notes", why: "How they actually sell — reveals real positioning vs. aspirational", format: "Audio, transcript, or notes" },
+        { doc: "LinkedIn profiles (founder + company)", why: "How they show up publicly, their network, their voice", format: "URLs" },
+    ],
+    priority_3_nice_to_have: [
+        { doc: "Marketing content they've created", why: "Voice, quality bar, what they think resonates", format: "Links or files" },
+        { doc: "Competitor list or analysis", why: "How they see their market — often reveals blind spots", format: "Any format" },
+        { doc: "Investor memo or board deck", why: "Unfiltered view of goals, metrics, constraints", format: "PDF" },
+        { doc: "CRM export or pipeline snapshot", why: "Real data on what's in the pipeline — grounds the analysis", format: "CSV or screenshot" },
+        { doc: "Previous agency/consultant work", why: "What's been tried, what quality bar was set", format: "Any format" },
+    ],
+};

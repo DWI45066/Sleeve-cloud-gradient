@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { DEFAULT_CONTEXT, PROMPT_CONTEXT } from "./src/data/context.js";
 import { COMPETITORS, MARKET_INTEL } from "./src/data/competitors.js";
-import { INTAKE_QUESTIONS, INTAKE_EXTRACTOR } from "./src/data/intake.js";
+import { INTAKE_QUESTIONS, INTAKE_EXTRACTOR, CLIENT_INTAKE_PROMPT } from "./src/data/intake.js";
 import { WORKFLOWS } from "./src/data/workflows.js";
 import { FRAMEWORKS } from "./src/data/frameworks.js";
 import { RESEARCH_AGENT_PROMPT, RESEARCH_AGENTS, AUTOMATION_AGENTS, HUMAN_VS_AGENT, WEEKLY_BRIEF, AGENT_PROMPTS } from "./src/data/prompts.js";
@@ -589,6 +589,10 @@ export default function SleeveCloudOS() {
             copyToClipboard(INTAKE_EXTRACTOR, 'extraction_prompt');
         };
 
+        const copyClientPrompt = () => {
+            copyToClipboard(CLIENT_INTAKE_PROMPT, 'client_prompt');
+        };
+
         return (
             <div>
                 <Card style={{ borderColor: C.primaryBorder }}>
@@ -601,7 +605,10 @@ export default function SleeveCloudOS() {
                             {copied === 'all_questions' ? 'Copied!' : 'Copy All 56 Questions (Formatted)'}
                         </button>
                         <button onClick={copyExtractionPrompt} style={{ padding: "12px 20px", background: "rgba(245, 158, 11, 0.1)", border: "1px solid rgba(245, 158, 11, 0.3)", borderRadius: 8, color: "#f59e0b", fontSize: 14, fontWeight: 600, cursor: "pointer", flex: 1, minWidth: 200 }}>
-                            {copied === 'extraction_prompt' ? 'Copied!' : 'Copy Extraction Prompt (AI-Assisted)'}
+                            {copied === 'extraction_prompt' ? 'Copied!' : 'Copy Extraction Prompt (You Run)'}
+                        </button>
+                        <button onClick={copyClientPrompt} style={{ padding: "12px 20px", background: "rgba(16, 185, 129, 0.1)", border: "1px solid rgba(16, 185, 129, 0.3)", borderRadius: 8, color: "#10b981", fontSize: 14, fontWeight: 600, cursor: "pointer", flex: 1, minWidth: 200 }}>
+                            {copied === 'client_prompt' ? 'Copied!' : 'Copy Client Prompt (Send to Client)'}
                         </button>
                     </div>
                     <div style={{ marginTop: 12, padding: "10px 14px", background: "rgba(245, 158, 11, 0.05)", borderRadius: 8, border: "1px solid rgba(245, 158, 11, 0.15)" }}>
