@@ -5,7 +5,7 @@ import { INTAKE_QUESTIONS, INTAKE_EXTRACTOR, CLIENT_INTAKE_PROMPT } from "./src/
 import { WORKFLOWS } from "./src/data/workflows.js";
 import { FRAMEWORKS } from "./src/data/frameworks.js";
 import { RESEARCH_AGENT_PROMPT, RESEARCH_AGENTS, AUTOMATION_AGENTS, HUMAN_VS_AGENT, WEEKLY_BRIEF, AGENT_PROMPTS } from "./src/data/prompts.js";
-import { TOOLS, CAT_LABELS, CUSTOMER_JOURNEY, EXECUTION_PHASES_MAP, FUNNEL_NUMBERS, PHASES, OFFER, FUNNEL, PLAYBOOKS, METRICS, WEEKLY_RHYTHM, CORE_RULES } from "./src/data/business.js";
+import { TOOLS, CAT_LABELS, CUSTOMER_JOURNEY, EXECUTION_PHASES_MAP, FUNNEL_NUMBERS, PHASES, OFFER, FUNNEL, PLAYBOOKS, METRICS, WEEKLY_RHYTHM, CORE_RULES, GTM_FLYWHEEL } from "./src/data/business.js";
 import { QUEST_NODES, QUEST_MILESTONES, QUEST_FUNNEL, QUEST_CORE_TOOLS, QUEST_TOOL_SLOTS, QUEST_CHANNELS, QUEST_JOURNEY_STAGES } from "./src/data/quest.js";
 import { STORAGE_KEY, defaultState, MODES, EXEC_NAV, BUILD_NAV, HUB_WEEKS, HUB_THIS_WEEK, HUB_KILL_CRITERIA, HUB_TABLES, HUB_DB_STEPS, HUB_AGENT_CONTRACTS, HUB_TRANSCRIPTS } from "./src/data/hub.js";
 
@@ -193,7 +193,7 @@ export default function SleeveCloudOS() {
         );
     }
 
-    // Color palette - teal/emerald theme for Sleeve Cloud
+    // Color palette - teal/emerald theme
     const C = {
         bg: "#0a0f0d",
         sidebar: "#0d1210",
@@ -430,7 +430,7 @@ export default function SleeveCloudOS() {
 
                 <Card style={{ background: C.successBg, borderColor: C.successBorder }}>
                     <div style={{ fontSize: 13, color: C.success, lineHeight: 1.6 }}>
-                        <strong>How it works:</strong> Edit any field above. All prompts in the Playbooks and Phases tabs automatically use your updated values. Change "Sleeve Cloud" to your company name, and every prompt updates instantly.
+                        <strong>How it works:</strong> Edit any field above. All prompts in the Playbooks and Phases tabs automatically use your updated values. Change "{context.name}" to your company name, and every prompt updates instantly.
                     </div>
                 </Card>
             </div>
@@ -473,7 +473,7 @@ export default function SleeveCloudOS() {
                                 <div style={{ fontSize: 12, color: C.text, lineHeight: 1.6 }}>{c.weaknesses}</div>
                             </div>
                             <div style={{ padding: "10px 14px", background: `${C.primary}10`, border: `1px solid rgba(16,185,129,0.2)`, borderRadius: 8 }}>
-                                <div style={{ fontSize: 10, fontWeight: 700, color: C.primary, marginBottom: 3 }}>SLEEVE CLOUD ADVANTAGE</div>
+                                <div style={{ fontSize: 10, fontWeight: 700, color: C.primary, marginBottom: 3 }}>{context.name.toUpperCase()} ADVANTAGE</div>
                                 <div style={{ fontSize: 12, color: C.text, lineHeight: 1.6 }}>{c.sleeve_advantage}</div>
                             </div>
                         </div>
@@ -734,39 +734,125 @@ export default function SleeveCloudOS() {
         </div>
     );
 
-    const renderFunnel = () => (
-        <div>
-            <Card style={{ borderColor: C.primaryBorder }}>
-                <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 20 }}>THE FUNNEL</div>
-                {FUNNEL.map((stage, i) => (
-                    <div key={i} style={{ marginBottom: 16 }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
-                            <div style={{ width: `${stage.pct * 0.5 + 20}%`, minWidth: 100, maxWidth: "50%", height: 40, borderRadius: 8, background: `${stage.color}30`, border: `1px solid ${stage.color}50`, display: "flex", alignItems: "center", padding: "0 12px" }}>
-                                <span style={{ fontSize: 13, fontWeight: 700, color: stage.color }}>{stage.name}</span>
-                            </div>
-                            <div style={{ flex: 1 }}>
-                                <div style={{ fontSize: 12, color: C.text }}>{stage.desc}</div>
-                                <div style={{ fontSize: 11, color: C.textMuted }}>
-                                    {stage.metric}: <span style={{ color: C.success, fontWeight: 600 }}>{stage.target}</span> <span style={{ color: C.primary }}>{stage.people} people</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </Card>
-
-            <Card>
-                <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 12 }}>CONVERSION MATH</div>
-                <div style={{ fontSize: 13, color: C.textMuted, lineHeight: 1.8 }}>
-                    <div>{"1,000 impressions → 50 calls (5%) → 15 teardowns (30%) → 8 pilots (50%) → 6 retained (75%)"}</div>
-                    <div style={{ marginTop: 12, padding: "12px", background: C.primaryBg, borderRadius: 8 }}>
-                        <strong style={{ color: C.primary }}>At $4K average MRR per client:</strong><br />
-                        6 retained clients = <span style={{ color: C.success, fontWeight: 700 }}>$24K MRR</span>
-                    </div>
+    const renderFunnel = () => {
+        const fw = GTM_FLYWHEEL;
+        const sectionLabel = (text) => (
+            <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "20px 0 10px" }}>
+                <div style={{ height: 1, flex: 1, background: C.border }} />
+                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", color: C.textFaint }}>{text}</div>
+                <div style={{ height: 1, flex: 1, background: C.border }} />
+            </div>
+        );
+        const arrow = () => (
+            <div style={{ display: "flex", justifyContent: "center", padding: "6px 0" }}>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    <div style={{ width: 2, height: 16, background: `linear-gradient(180deg, ${C.primary}60, ${C.primary})` }} />
+                    <div style={{ width: 0, height: 0, borderLeft: "5px solid transparent", borderRight: "5px solid transparent", borderTop: `6px solid ${C.primary}` }} />
                 </div>
-            </Card>
-        </div>
-    );
+            </div>
+        );
+
+        return (
+            <div>
+                <Card style={{ borderColor: C.primaryBorder }}>
+                    <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>GTM FLYWHEEL</div>
+                    <div style={{ fontSize: 12, color: C.textMuted }}>How prospects discover, evaluate, and buy — customized for {context.name}</div>
+                </Card>
+
+                {/* TRAFFIC SOURCES */}
+                {sectionLabel("TRAFFIC SOURCES")}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+                    {fw.trafficSources.map((src, i) => (
+                        <Card key={i} style={{ borderColor: src.color + "40", padding: 12 }}>
+                            <div style={{ fontSize: 12, fontWeight: 700, color: src.color, marginBottom: 8 }}>{src.name}</div>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                                {src.tools.map((tool, j) => (
+                                    <span key={j} style={{ padding: "3px 8px", background: src.color + "15", borderRadius: 4, fontSize: 10, color: src.color, fontWeight: 500 }}>{tool}</span>
+                                ))}
+                            </div>
+                        </Card>
+                    ))}
+                </div>
+
+                {arrow()}
+
+                {/* CAPTURE */}
+                {sectionLabel("CAPTURE")}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+                    {fw.capture.map((cap, i) => (
+                        <Card key={i} style={{ padding: 12 }}>
+                            <div style={{ fontSize: 12, fontWeight: 600, color: C.text, marginBottom: 4 }}>{cap.name}</div>
+                            <div style={{ fontSize: 11, color: C.textMuted, lineHeight: 1.4 }}>{cap.desc}</div>
+                        </Card>
+                    ))}
+                </div>
+
+                {arrow()}
+
+                {/* NURTURE / WEBSITE */}
+                {sectionLabel("NURTURE")}
+                <Card>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center" }}>
+                        {fw.nurture.map((n, i) => (
+                            <div key={i} style={{ padding: "10px 16px", background: "rgba(20, 184, 166, 0.08)", border: `1px solid ${C.primaryBorder}`, borderRadius: 8, textAlign: "center", minWidth: 120 }}>
+                                <div style={{ fontSize: 12, fontWeight: 600, color: C.primary }}>{n.name}</div>
+                                <div style={{ fontSize: 10, color: C.textMuted, marginTop: 4 }}>{n.desc}</div>
+                            </div>
+                        ))}
+                    </div>
+                </Card>
+
+                {arrow()}
+
+                {/* CONVERSION */}
+                {sectionLabel("CONVERSION")}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                    {fw.conversion.map((conv, i) => (
+                        <Card key={i} style={{ borderColor: "#f59e0b40", padding: 14 }}>
+                            <div style={{ fontSize: 13, fontWeight: 700, color: "#f59e0b", marginBottom: 4 }}>{conv.name}</div>
+                            <div style={{ fontSize: 12, color: C.text }}>{conv.desc}</div>
+                            {conv.metric && <div style={{ fontSize: 11, color: C.success, marginTop: 6, fontWeight: 600 }}>{conv.metric}</div>}
+                        </Card>
+                    ))}
+                </div>
+
+                {arrow()}
+
+                {/* CLOSE */}
+                {sectionLabel("CLOSE")}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                    {fw.close.map((cl, i) => (
+                        <Card key={i} style={{ borderColor: i === 1 ? "#10b98140" : C.border, padding: 14, background: i === 1 ? "rgba(16,185,129,0.08)" : undefined }}>
+                            <div style={{ fontSize: 13, fontWeight: 700, color: i === 1 ? C.success : C.text, marginBottom: 4 }}>{cl.name}</div>
+                            <div style={{ fontSize: 12, color: C.textMuted }}>{cl.desc}</div>
+                            {cl.metric && <div style={{ fontSize: 11, color: C.success, marginTop: 6, fontWeight: 600 }}>{cl.metric}</div>}
+                        </Card>
+                    ))}
+                </div>
+
+                {/* CONVERSION MATH */}
+                <Card style={{ marginTop: 12 }}>
+                    <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 12 }}>CONVERSION MATH</div>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+                        {FUNNEL.map((stage, i) => (
+                            <div key={i} style={{ display: "contents" }}>
+                                <div style={{ textAlign: "center", flex: 1, minWidth: 80 }}>
+                                    <div style={{ fontSize: 22, fontWeight: 700, color: stage.color }}>{stage.people}</div>
+                                    <div style={{ fontSize: 10, color: C.textMuted }}>{stage.name}</div>
+                                    <div style={{ fontSize: 10, color: C.textFaint }}>{stage.target}</div>
+                                </div>
+                                {i < FUNNEL.length - 1 && <div style={{ color: C.textFaint, fontSize: 16 }}>{">"}</div>}
+                            </div>
+                        ))}
+                    </div>
+                    <div style={{ marginTop: 16, padding: "12px", background: C.primaryBg, borderRadius: 8, textAlign: "center" }}>
+                        <strong style={{ color: C.primary }}>At $4K average MRR per client:</strong><br />
+                        <span style={{ color: C.text }}>6 retained clients = </span><span style={{ color: C.success, fontWeight: 700, fontSize: 16 }}>$24K MRR</span>
+                    </div>
+                </Card>
+            </div>
+        );
+    };
 
     const renderPhases = () => (
         <div>
@@ -990,7 +1076,7 @@ export default function SleeveCloudOS() {
             <Card style={{ borderColor: C.primaryBorder }}>
                 <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 8 }}>AGENT ARCHITECTURE</div>
                 <div style={{ fontSize: 13, color: C.textMuted, lineHeight: 1.7 }}>
-                    These prompts power your delivery. Paste client context (Company Sleeve) into the {"{company_sleeve}"} placeholder.
+                    These prompts power your delivery. Paste client context ({context.name} Context) into the {"{company_sleeve}"} placeholder.
                     Run in Claude. QA the output. Deliver to client.
                 </div>
             </Card>
@@ -1508,7 +1594,7 @@ export default function SleeveCloudOS() {
 
                                     {fw.sleeve && (
                                         <div style={{ padding: "12px 14px", background: C.primaryBg, borderRadius: 8, marginBottom: 10 }}>
-                                            <div style={{ fontSize: 10, fontWeight: 600, color: C.primary, marginBottom: 4 }}>SLEEVE CLOUD APPLICATION</div>
+                                            <div style={{ fontSize: 10, fontWeight: 600, color: C.primary, marginBottom: 4 }}>{context.name.toUpperCase()} APPLICATION</div>
                                             <div style={{ fontSize: 12, color: C.text, lineHeight: 1.6 }}>{fw.sleeve}</div>
                                         </div>
                                     )}
@@ -2059,8 +2145,8 @@ export default function SleeveCloudOS() {
             <div style={{ width: 200, background: C.sidebar, borderRight: `1px solid ${C.border}`, display: "flex", flexDirection: "column", flexShrink: 0 }}>
                 <div style={{ padding: "14px", borderBottom: `1px solid ${C.border}` }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <div style={{ width: 30, height: 30, borderRadius: 8, background: `linear-gradient(135deg, #f59e0b, ${C.primary})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "#fff" }}>S</div>
-                        <div><div style={{ fontSize: 13, fontWeight: 800 }}>SLEEVE CLOUD</div><div style={{ fontSize: 9, color: C.textFaint, letterSpacing: "0.08em" }}>CENTRAL HUB</div></div>
+                        <div style={{ width: 30, height: 30, borderRadius: 8, background: `linear-gradient(135deg, #f59e0b, ${C.primary})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "#fff" }}>{context.name.charAt(0).toUpperCase()}</div>
+                        <div><div style={{ fontSize: 13, fontWeight: 800 }}>{context.name.toUpperCase()}</div><div style={{ fontSize: 9, color: C.textFaint, letterSpacing: "0.08em" }}>CENTRAL HUB</div></div>
                     </div>
                 </div>
 

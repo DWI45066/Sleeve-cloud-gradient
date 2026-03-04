@@ -434,4 +434,39 @@ const CORE_RULES = [
 ];
 
 
-export { TOOLS, CAT_LABELS, CUSTOMER_JOURNEY, EXECUTION_PHASES_MAP, FUNNEL_NUMBERS, PHASES, OFFER, FUNNEL, PLAYBOOKS, METRICS, WEEKLY_RHYTHM, CORE_RULES };
+// ========================================
+// GTM FLYWHEEL -- Visual funnel/flywheel data
+// Customized for Gradient Network / Commonstack
+// ========================================
+
+const GTM_FLYWHEEL = {
+    trafficSources: [
+        { name: "Content", tools: ["Twitter/X", "Dev Blog", "YouTube", "Tutorials", "Benchmarks"], color: "#6366f1" },
+        { name: "Ads", tools: ["Twitter Ads", "Google Ads", "Reddit Ads"], color: "#f59e0b" },
+        { name: "Outbound", tools: ["Cold Email", "LinkedIn DMs", "Dev Discord DMs"], color: "#ec4899" },
+        { name: "Community", tools: ["Sentry Nodes", "Solana Ecosystem", "DePIN Partners", "Hackathons"], color: "#8b5cf6" },
+    ],
+    capture: [
+        { name: "Developer Followers", desc: "Build audience on X + dev communities" },
+        { name: "Community Engagement", desc: "Discord, Telegram, GitHub stars" },
+        { name: "Lead Magnets", desc: "Cost calculator, free API credits" },
+        { name: "Signups", desc: "commonstack.ai self-serve signup" },
+    ],
+    nurture: [
+        { name: "API Docs", desc: "Quickstart guides + model catalog" },
+        { name: "Developer Email", desc: "Onboarding drip + usage tips" },
+        { name: "Case Studies", desc: "Cost savings + reliability proof" },
+        { name: "Benchmarks", desc: "Latency + cost comparisons vs direct" },
+        { name: "Community", desc: "Discord support + developer feedback" },
+    ],
+    conversion: [
+        { name: "First API Call", desc: "Developer makes first inference", metric: "40% of signups" },
+        { name: "Paying User", desc: "$200+/mo inference spend", metric: "25% of active" },
+    ],
+    close: [
+        { name: "Usage Growth", desc: "Developer increases token volume" },
+        { name: "Scaled Account", desc: "$1K-$15K/mo spend", metric: "120% NRR" },
+    ],
+};
+
+export { TOOLS, CAT_LABELS, CUSTOMER_JOURNEY, EXECUTION_PHASES_MAP, FUNNEL_NUMBERS, PHASES, OFFER, FUNNEL, PLAYBOOKS, METRICS, WEEKLY_RHYTHM, CORE_RULES, GTM_FLYWHEEL };
